@@ -1,0 +1,23 @@
+#define BLYNK_TEMPLATE_ID "TMPLxxxx" 
+#define BLYNK_DEVICE_NAME "ESP32" 
+#define BLYNK_AUTH_TOKEN "YourAuthToken" 
+#include <WiFi.h> 
+#include <BlynkSimpleEsp32.h> 
+char ssid[] = "YOUR_WIFI_NAME"; 
+char pass[] = "YOUR_WIFI_PASSWORD"; 
+BlynkTimer timer; 
+void sendData() { 
+int sensorValue = random(20,40); 
+Blynk.virtualWrite(V0, sensorValue); 
+Serial.print("Temperature: "); 
+Serial.println(sensorValue); 
+} 
+void setup() { 
+Serial.begin(115200); 
+Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass); 
+timer.setInterval(2000L, sendData); 
+} 
+void loop() { 
+Blynk.run(); 
+timer.run(); 
+}
